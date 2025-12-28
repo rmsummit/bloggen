@@ -1,0 +1,56 @@
+workflow:
+  quality_level: premium  # basic | standard | premium
+
+  parallel_execution:
+    enabled: true
+    max_workers: 10
+    timeout: 300000  # milliseconds (5 minutes)
+
+  consensus:
+    threshold: 0.7
+    max_rounds: 3
+    mediator: "claude-sonnet-4"
+    voting_weights:
+      tfidf-analyzer: 0.3
+      trend-keyword-analyzer: 0.25
+      competition-analyzer: 0.25
+      intent-classifier: 0.2
+
+  quality_gates:
+    strict_mode: true
+    auto_retry: true
+    max_retries: 3
+
+  stages:
+    intelligence:
+      data_sources: 5
+      keyword_analyzers: 4
+      min_confidence: 0.7
+
+    creation:
+      writers: 4
+      style_guide: "professional"
+      coherence_threshold: 0.85
+
+    refinement:
+      reviewers: 3
+      consensus_required: 0.67  # 2/3
+      auto_fix: true
+
+    optimization:
+      image_generators: 3
+      seo_modules: 4
+      ab_test: true
+
+    publishing:
+      platforms:
+        - tistory
+        - naver
+        - wordpress
+      smart_scheduling: true
+      parallel_publish: true
+
+  learning:
+    enabled: true
+    feedback_loop: true
+    model_update_interval: 7  # days
