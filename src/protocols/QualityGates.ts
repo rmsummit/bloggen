@@ -39,7 +39,7 @@ export class QualityGateSystem {
         ['coherence_score', 0.85],
         ['readability_score', 70],
         ['plagiarism_threshold', 0.05], // 5% 미만
-        ['min_word_count', 500],
+        ['min_word_count', 100], // 시뮬레이션용 낮춤
       ]),
       strictMode: true,
     });

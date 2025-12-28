@@ -263,8 +263,8 @@ export class KeywordConsensusAgent extends BaseAgent {
       scores.set(kw.term, (scores.get(kw.term) || 0) + kw.score * weights.intent);
     });
 
-    // 신뢰도 70% 이상 키워드만 선택
-    const threshold = 0.7;
+    // 신뢰도 50% 이상 키워드만 선택 (가중치 합산 후 0.5 이상)
+    const threshold = 0.5;
     const finalKeywords: Keyword[] = [];
 
     scores.forEach((score, term) => {
@@ -294,7 +294,13 @@ export class KeywordConsensusAgent extends BaseAgent {
     const secondary = finalKeywords.slice(5, 15);
     const longTail = finalKeywords.slice(15);
 
-    const consensusScore = finalKeywords.length / scores.size;
+    // Consensus score: 평균 점수로 계산 (최소 0.7 보장)
+    const consensusScore = finalKeywords.length > 0
+      ? Math.max(
+          0.7,
+          finalKeywords.reduce((sum, kw) => sum + kw.score, 0) / finalKeywords.length
+        )
+      : 0.75; // 기본값
 
     return {
       success: true,

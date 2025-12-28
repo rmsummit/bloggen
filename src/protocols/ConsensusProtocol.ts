@@ -34,13 +34,14 @@ export class ConsensusProtocol {
   ): Promise<ConsensusResult<T>> {
     let round = 0;
     let deliberationContext: any = null;
+    let results: any[] = [];
 
     while (round < this.config.maxRounds) {
       round++;
       console.log(`\n=== Consensus Round ${round} ===`);
 
       // 1단계: 모든 에이전트 병렬 실행
-      const results = await this.parallelExecute(
+      results = await this.parallelExecute(
         agents,
         context,
         deliberationContext
